@@ -1,49 +1,34 @@
 package com.example;
 
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-
-import java.util.List;
-
-
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-
-@ExtendWith(MockitoExtension.class)
 class LionTest {
 
-
-    @Mock
-    private FelineBehavior felineMock;
-
-
     @Test
-    void maleHasManeAndDelegates() throws Exception {
-        when(felineMock.getKittens()).thenReturn(2);
-        when(felineMock.eatMeat()).thenReturn(List.of("Животные"));
-
-
-        Lion lion = new Lion("Самец", felineMock);
-
-
+    void maleLionShouldHaveManeAndDelegateFoodAndKittens() throws Exception {
+        Feline feline = new Feline();
+        Lion lion = new Lion("Самец", feline);
         assertTrue(lion.doesHaveMane());
-        assertEquals(2, lion.getKittens());
-        assertEquals(1, lion.getFood().size());
-
-
-        verify(felineMock, times(1)).getKittens();
-        verify(felineMock, times(1)).eatMeat();
+        assertEquals(1, lion.getKittens());
+        var food = lion.getFood();
+        assertNotNull(food);
+        assertTrue(food.contains("Животные"));
+        assertTrue(food.contains("Птицы"));
+        assertTrue(food.contains("Рыба"));
     }
 
+    @Test
+    void femaleLionShouldNotHaveMane() throws Exception {
+        Feline feline = new Feline();
+        Lion lion = new Lion("Самка", feline);
+        assertFalse(lion.doesHaveMane());
+    }
 
     @Test
-    void femaleHasNoMane() throws Exception {
-        Lion lion = new Lion("Самка", felineMock);
-        assertFalse(lion.doesHaveMane());
+    void invalidSexShouldThrowException() {
+        Feline feline = new Feline();
+        Exception ex = assertThrows(Exception.class, () -> new Lion("Другой", feline));
+        assertEquals("Используйте допустимые значения пола животного - самец или самка", ex.getMessage());
     }
 }

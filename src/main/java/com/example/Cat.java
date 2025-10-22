@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Cat {
 
-    private final FelineBehavior feline;
+    private final Feline feline;
 
-    public Cat(FelineBehavior feline) {
+    public Cat(Feline feline) {
         this.feline = feline;
     }
 
