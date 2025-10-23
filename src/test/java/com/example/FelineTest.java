@@ -1,10 +1,9 @@
 package com.example;
 
-
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FelineTest {
     private Feline feline;
@@ -15,23 +14,38 @@ class FelineTest {
     }
 
     @Test
-    void eatMeatReturnsMeatList() throws Exception {
+    void eatMeatReturnsNotNull() throws Exception {
         List<String> food = feline.eatMeat();
         assertNotNull(food);
+    }
+
+    @Test
+    void eatMeatContainsAnimals() throws Exception {
+        List<String> food = feline.eatMeat();
         assertTrue(food.contains("Животные"));
+    }
+
+    @Test
+    void eatMeatContainsBirds() throws Exception {
+        List<String> food = feline.eatMeat();
         assertTrue(food.contains("Птицы"));
+    }
+
+    @Test
+    void eatMeatContainsFish() throws Exception {
+        List<String> food = feline.eatMeat();
         assertTrue(food.contains("Рыба"));
     }
 
-
     @Test
     void getFamilyShouldReturnCatFamily() {
-        assertEquals("Кошачьи", feline.getFamily());
+        String family = feline.getFamily();
+        assertEquals("Кошачьи", family);
     }
-
 
     @Test
     void defaultGetKittensReturnsOne() {
-        assertEquals(1, feline.getKittens());
+        int kittensCount = feline.getKittens();
+        assertEquals(1, kittensCount);
     }
 }

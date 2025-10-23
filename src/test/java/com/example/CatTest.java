@@ -1,8 +1,12 @@
 package com.example;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 class CatTest {
 
     @Test
@@ -12,19 +16,23 @@ class CatTest {
     }
 
     @Test
-    void getKittensShouldReturnOneAndFoodListIsCorrect() {
-        Feline feline = new Feline();
-        Cat cat = new Cat(feline);
+    void getKittensShouldReturnOne() {
+        Cat cat = new Cat(new Feline());
         assertEquals(1, cat.getKittens());
     }
 
     @Test
-    void getFoodShouldReturnFullMeatList() throws Exception {
+    void getFoodShouldNotBeNull() throws Exception {
         Cat cat = new Cat(new Feline());
-        var food = cat.getFood();
+        List<String> food = cat.getFood();
         assertNotNull(food);
-        assertTrue(food.contains("Животные"));
-        assertTrue(food.contains("Птицы"));
-        assertTrue(food.contains("Рыба"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Животные", "Птицы", "Рыба"})
+    void getFoodShouldContainExpectedItems(String expectedItem) throws Exception {
+        Cat cat = new Cat(new Feline());
+        List<String> food = cat.getFood();
+        assertTrue(food.contains(expectedItem), "Список еды должен содержать: " + expectedItem);
     }
 }
